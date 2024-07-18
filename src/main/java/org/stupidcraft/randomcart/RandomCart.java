@@ -1,5 +1,7 @@
 package org.stupidcraft.randomcart;
 
+import io.papermc.lib.PaperLib;
+import org.bstats.bukkit.Metrics;
 import org.stupidcraft.randomcart.listeners.BlockBreakListener;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
@@ -20,6 +22,7 @@ public final class RandomCart extends JavaPlugin implements Listener {
         Random random = new Random();
 
         this.saveDefaultConfig();
+        PaperLib.suggestPaper(this);
 
         // Initialize bStats metrics
         final boolean metricsEnabled = config.getBoolean("toggle-metrics", true);
