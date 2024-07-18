@@ -21,5 +21,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: randomcart-artifacts
-          path: build/*.jar
+          path: build/libs/*.jar
           compression-level: 0
