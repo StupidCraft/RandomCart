@@ -4,7 +4,12 @@ plugins {
 
 dependencies {
     compileOnly(libs.spigot.api)
-    compileOnly(libs.bstats.bukkit)
+}
+
+tasks {
+    compileJava {
+        options.encoding = Charsets.UTF_8.name()
+    }
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)

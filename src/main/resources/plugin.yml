@@ -1,6 +1,6 @@
 name: RandomCart
 version: '${project.version}'
-main: com.triassic.randomcart.RandomCart
+main: org.stupidcraft.randomcart.RandomCart
 api-version: 1.13
 folia-supported: true
 authors: [ Triassic ]

@@ -1,11 +1,9 @@
 metadata.format.version = "1.1"
 
 [versions]
-bstats = "3.0.2"
-spigot = "1.13-R0.1-SNAPSHOT"
+spigot = "1.13.2-R0.1-SNAPSHOT"
 
 [plugins]
 
 [libraries]
-bstats-bukkit = { group = "org.bstats", name = "bstats-bukkit", version.ref = "bstats" }
 spigot-api = { group = "org.spigotmc", name = "spigot-api", version.ref = "spigot" }
