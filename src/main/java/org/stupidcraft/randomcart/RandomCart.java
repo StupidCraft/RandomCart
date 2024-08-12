@@ -15,6 +15,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 public final class RandomCart extends JavaPlugin implements Listener {
+
     @Override
     public void onEnable() {
         Logger logger = getLogger();

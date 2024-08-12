@@ -24,6 +24,7 @@ import java.util.Random;
 import java.util.logging.Logger;
 
 public class BlockBreakListener implements Listener {
+
     private final Logger logger;
     private final Random random;
     private final Configuration config;
@@ -45,7 +46,7 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
-        if (random.nextInt(100) > summonChance) {
+        if (random.nextDouble() * 100 >= summonChance) {
             return;
         }
 
