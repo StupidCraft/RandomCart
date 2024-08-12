@@ -1,6 +1,5 @@
 package org.stupidcraft.randomcart.listeners;
 
-import org.stupidcraft.randomcart.RandomCart;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,6 +9,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +17,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.stupidcraft.randomcart.RandomCart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +30,46 @@ public class BlockBreakListener implements Listener {
     private final Random random;
     private final Configuration config;
     private final List<Material> allowedBlocks;
-    private final int summonChance;
+    private final double summonChance;
+    private final List<String> disabledWorlds;
+    private final List<String> disabledGamemodes;
+    private final List<Enchantment> disabledEnchantments = new ArrayList<>();
 
     public BlockBreakListener(Configuration config, Logger logger, Random random) {
         this.config = config;
         this.logger = logger;
         this.random = random;
         this.allowedBlocks = RandomCart.loadAllowedBlocks(config, logger);
-        this.summonChance = config.getInt("randomcart.chance");
+        this.summonChance = config.getDouble("randomcart.chance");
+        this.disabledWorlds = config.getStringList("randomcart.disabled-worlds");
+        this.disabledGamemodes = config.getStringList("randomcart.disabled-gamemodes");
+
+        for (String ench : config.getStringList("randomcart.disabled-enchantments")) {
+            this.disabledEnchantments.add(Enchantment.getByKey(NamespacedKey.minecraft(ench.toLowerCase())));
+        }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (!allowedBlocks.contains(block.getType()) || event.isCancelled()) {
+        Player player = event.getPlayer();
+        ItemStack itemInHand = player.getInventory().getItemInMainHand();
+
+        if (disabledWorlds.contains(player.getWorld().getName()) || disabledGamemodes.contains(player.getGameMode().name()) || !allowedBlocks.contains(block.getType()) || event.isCancelled()) {
             return;
         }
 
-        if (random.nextDouble() * 100 >= summonChance) {
+        // Check for disabled enchantments
+        if (itemInHand.getType() != Material.AIR) {
+            boolean hasDisabledEnchantments = itemInHand.getEnchantments().keySet().stream()
+                    .anyMatch(disabledEnchantments::contains);
+
+            if (hasDisabledEnchantments) {
+                return;
+            }
+        }
+
+        if (random.nextDouble() >= summonChance) {
             return;
         }
 

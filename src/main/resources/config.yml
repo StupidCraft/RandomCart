@@ -16,12 +16,22 @@
 
 
 randomcart:
-  chance: 0.5 # The chance that a RandomCart spawns.
+  chance: 0.01 # The chance that a RandomCart spawns. Default value is 0.01, meaning 1% chance.
   # Blocks that have the ability to spawn RandomCarts.
   allowed-blocks:
     - STONE
     - DIRT
     - GRASS_BLOCK
+  # If player is in any of these worlds, do not summon.
+  disabled-worlds:
+    - disabled_world
+  # If player is in any of these gamemodes, do not summon.
+  disabled-gamemodes:
+    - CREATIVE
+    - SPECTATOR
+  # If tool that player used has any of these enchants, do not summon.
+  disabled-enchantments:
+    - SILK_TOUCH
 
 minecarts:
 #  miner-cart: # Identifier used internally by the plugin.
