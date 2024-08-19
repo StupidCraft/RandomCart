@@ -1,7 +1,7 @@
 metadata.format.version = "1.1"
 
 [versions]
-bstats = "3.0.2"
+bstats = "3.0.3"
 paperlib = "1.0.8"
 plugin-yml = "0.6.0"
 spigot = "1.13.2-R0.1-SNAPSHOT"
